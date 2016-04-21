@@ -4,7 +4,7 @@ In order to run the code, Python 3 must be installed with Pip3.
 
 ## Module Dependencies
 
-With pip3 installed, these items should be installable via command line by navigating to the project directory and running `pip3 install -r requirements.txt'. If there are any issues, they can be manually found and installed online.
+With pip3 installed, these items should be installable via command line by navigating to the project directory and running `pip3 install -r requirements.txt`. If there are any issues, they can be manually found and installed online.
 
 Note: pip3 may be installed as `pip`
 
