@@ -2,6 +2,7 @@ from nltk.tokenize import sent_tokenize
 from nltk.tokenize import word_tokenize
 from nltk import pos_tag
 from nltk.util import ngrams
+import nltk
 import operator
 
 MAX_N = 3
@@ -41,14 +42,23 @@ def determine_primary_tense(sample):
     sortedTenses.reverse()
     return sortedTenses[0][0]
 
+# Download any needed wordlists if they do not exist
+print("[NOTE] If this is the first time run, NLTK will download necessary word lists.")
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+print(" ----- BEGIN PROGRAM -----")
+
 primaryTense = determine_primary_tense(sample)
+
+print("Provided Sample: " + sample)
+print("\n\nAnalyzing Text... \n\n")
+
 print("Determined Summary Primary Tense: " + primaryTense)
-print("Analyzing Text: Remember - All tenses should be "+primaryTense)
 
 for sentence in sent_tokenize(sample):
     tenses = determine_most_tense_sentence(sentence)
     # Dumb check: The most used tense is incorrect
     if tenses[0][0] != primaryTense:
-        print(" -- [Problem] Majority of sentence is of incorrect tense; \""+sentence+"\"")
+        print(" -- [Problem] Majority of sentence is of incorrect tense; Should be " + primaryTense + "\n\t\""+sentence+"\"")
     elif (tenses[1][1] + tenses[2][1]) != 0:
-        print(" -- [Warning] Sentence may have a tense error; \""+sentence+"\"")
+        print(" -- [Warning] Parts of the sentence may be of incorrect tense; Should be " + primaryTense + "\n\t\""+sentence+"\"")
