@@ -1,0 +1,5 @@
+# pip requirements files
+# install using: pip3 install -r requirements.txt
+
+numpy ~= 1.10
+nltk ~= 3.2.1
