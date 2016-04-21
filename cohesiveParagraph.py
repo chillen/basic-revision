@@ -7,11 +7,18 @@ from collections import Counter as mset
 from collections import defaultdict
 import numpy as np
 import operator
+import nltk
 
 # Inspired by summary builder
 # https://thetokenizer.com/2013/04/28/build-your-own-summary-tool/
 
 sample = open("cohesiveText.txt").read()
+
+print("[NOTE] If this is the first time run, NLTK will download necessary word lists.")
+nltk.download('punkt')
+nltk.download('wordnet')
+
+
 regToken = RegexpTokenizer(r'\w+') # Get rid of pesky punctuation
 sentences = sent_tokenize(sample)
 sentenceCount = {}
@@ -61,11 +68,17 @@ stdDev = np.std([sentence[1] for sentence in sentenceCount])
 mean = sum([sentence[1] for sentence in sentenceCount]) / len([sentence[1] for sentence in sentenceCount])
 #print([sentence[1] for sentence in sentenceCount])
 
-print("\n---- DATA ----\n")
+print(" ----- BEGIN PROGRAM -----")
 
-print(sentenceCount)
+print("Provided Sample: " + sample)
+print("\nAnalyzing Text... \n")
 
-print("\nStd: " + str(stdDev) + "; Mean: " + str(mean) + "; Thresh: " + str(mean - THRESH*stdDev))
+print("Evaluated Text: Cohesion score left, sentence right\n")
+for sentence, score in sentenceCount:
+    #print(sentence)
+    print("[{0:4.2f}] \"{1:20s}\"".format(score, sentence))
+    
+print("\nStd: " + str(stdDev) + "; Mean: " + str(mean) + "; Thresh: " + str(mean - THRESH*stdDev) + "\n")
 for sentence in sentenceCount:
     if mean - THRESH*stdDev > sentence[1]:
         print("\n[Problem] This sentence seems unrelated to the rest of the paragraph:\n\t \'"+sentence[0]+"\"")
