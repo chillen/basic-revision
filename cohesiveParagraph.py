@@ -45,9 +45,10 @@ def intersect_value(s1, s2):
                 continue
             similar = wn.wup_similarity(synw1, synw2)
             if similar is not None:
-                #if similar != 1:
-                #    similar /= 2
-                intersect += similar
+                similar *= similar
+                if similar == 1:
+                    similar *= 2
+                intersect += similar / (len(s1 + s2) / 2)
 
     #normalize to the size of each sentence
     return intersect# / normalizer
